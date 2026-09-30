@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Menu | Restoran Reyza</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a class="logo" href="Restoran%20Reyza.html" style="color: inherit; text-decoration: none">Restoran Reyza</a>
+            <ul>
+                <li><a href="info.html"><span class="nav-icon" aria-hidden="true">&#9432;</span>Info</a></li>
+                <li><a href="profil.html"><span class="nav-icon" aria-hidden="true">&#128100;</span>Profil</a></li>
+                <li><a href="about.html"><span class="nav-icon" aria-hidden="true">&#9733;</span>About</a></li>
+                <li><a href="gallery.html"><span class="nav-icon" aria-hidden="true">&#128247;</span>Gallery</a></li>
+                <li><a href="contact.html"><span class="nav-icon" aria-hidden="true">&#128222;</span>Contact</a></li>
+            </ul>
+        </nav>
+        <div class="page-banner"><h1>Gallery Menu</h1><p>Pilih menu favorit, lihat videonya, lalu kirim pesanan melalui WhatsApp.</p></div>
+    </header>
+    <main>
+        <section id="gallery">
+            <div class="section-heading"><h2>Daftar Menu</h2><p>Sentuh gambar menu untuk melihat video sesuai nama hidangan.</p></div>
+            <div class="filter" aria-label="Filter menu">
+                <button class="active" data-filter="semua">Semua</button>
+                <button data-filter="makanan">Makanan</button>
+                <button data-filter="minuman">Minuman</button>
+            </div>
+            <div class="menu-grid" id="menu-list"></div>
+        </section>
+        <section id="pesanan">
+            <div class="section-heading"><h2>Pesanan Anda</h2><p>Atur jumlah pesanan, lalu kirim melalui WhatsApp.</p></div>
+            <div class="cart-wrap">
+                <ol class="order-steps">
+                    <li>Pilih kategori makanan atau minuman pada bagian Gallery.</li>
+                    <li>Sentuh gambar menu untuk melihat video hidangan.</li>
+                    <li>Tekan tombol "Tambah ke Pesanan" pada menu yang dipilih.</li>
+                    <li>Atur jumlah menu menggunakan tombol tambah atau kurang di keranjang.</li>
+                    <li>Isi nama dan nomor WhatsApp, lalu tambahkan catatan jika diperlukan.</li>
+                    <li>Tekan tombol "Kirim Pesanan via WhatsApp" untuk mengirim pesanan.</li>
+                </ol>
+                <table class="cart-table">
+                    <thead><tr><th>Menu</th><th>Harga</th><th>Jumlah</th><th>Subtotal</th><th>Aksi</th></tr></thead>
+                    <tbody id="cart-items"><tr><td colspan="5">Keranjang masih kosong.</td></tr></tbody>
+                </table>
+                <div class="total" id="cart-total">Total: Rp 0</div>
+                <form id="checkout-form">
+                    <input id="nama-pemesan" placeholder="Nama lengkap" required>
+                    <input id="kontak-pemesan" placeholder="Nomor telepon / WhatsApp" required>
+                    <textarea id="catatan-pemesan" placeholder="Catatan, nomor meja, atau alamat pengiriman"></textarea>
+                    <button class="btn" type="submit">Kirim Pesanan via WhatsApp</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer><p>Restoran Reyza &copy; 2026. Menerima pesanan untuk pesta, katering, dan makan bersama keluarga.</p></footer>
+    <script>
+        const menu = [
+            { nama: "Nasi Goreng Spesial", jenis: "makanan", harga: 28000, video: "video/nasi-goreng.mp4", gambar: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", deskripsi: "Nasi goreng dengan ayam suwir, telur, bakso, dan kerupuk." },
+            { nama: "Sate Ayam Madura", jenis: "makanan", harga: 32000, video: "video/sate-ayam.mp4", gambar: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600", deskripsi: "10 tusuk sate ayam empuk dengan bumbu kacang khas." },
+            { nama: "Soto Ayam Lamongan", jenis: "makanan", harga: 25000, video: "video/soto-ayam.mp4", gambar: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600", deskripsi: "Soto ayam gurih dengan koya dan telur rebus." },
+            { nama: "Es Teh Manis Segar", jenis: "minuman", harga: 6000, video: "video/es-teh-manis.mp4", gambar: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600", deskripsi: "Teh pilihan yang menyegarkan dahaga." },
+            { nama: "Es Jeruk Peras", jenis: "minuman", harga: 8000, video: "video/es-jeruk-peras.mp4", gambar: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600", deskripsi: "Sari jeruk segar yang kaya vitamin C." }
+        ];
+        let keranjang = [];
+        const rupiah = nilai => `Rp ${nilai.toLocaleString("id-ID")}`;
+
+        function tampilkanMenu(filter = "semua") {
+            const daftar = document.getElementById("menu-list");
+            daftar.innerHTML = menu.filter(item => filter === "semua" || item.jenis === filter).map(item => `
+                <article class="menu-card">
+                    <div class="media" onclick="putarVideo(this)" role="button" tabindex="0" aria-label="Putar video ${item.nama}">
+                        <img src="${item.gambar}" alt="${item.nama}">
+                        <video src="${item.video}" controls preload="metadata" title="Video ${item.nama}"></video>
+                    </div>
+                    <div class="menu-info"><h3>${item.nama}</h3><p>${item.deskripsi}</p><span class="price">${rupiah(item.harga)}</span></div>
+                    <button class="btn" onclick="tambahKeKeranjang('${item.nama}', ${item.harga})">Tambah ke Pesanan</button>
+                </article>`).join("");
+        }
+
+        function putarVideo(media) {
+            const video = media.querySelector("video");
+            document.querySelectorAll(".media.playing").forEach(item => { if (item !== media) { item.classList.remove("playing"); item.querySelector("video").pause(); } });
+            media.classList.add("playing");
+            video.play().catch(() => {});
+        }
+
+        function tambahKeKeranjang(nama, harga) {
+            const item = keranjang.find(data => data.nama === nama);
+            item ? item.jumlah++ : keranjang.push({ nama, harga, jumlah: 1 });
+            tampilkanKeranjang();
+            document.getElementById("pesanan").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function ubahJumlah(index, perubahan) {
+            keranjang[index].jumlah += perubahan;
+            if (keranjang[index].jumlah < 1) keranjang.splice(index, 1);
+            tampilkanKeranjang();
+        }
+
+        function hapusItem(index) { keranjang.splice(index, 1); tampilkanKeranjang(); }
+
+        function tampilkanKeranjang() {
+            const tubuh = document.getElementById("cart-items");
+            if (!keranjang.length) { tubuh.innerHTML = "<tr><td colspan=\"5\">Keranjang masih kosong.</td></tr>"; document.getElementById("cart-total").textContent = "Total: Rp 0"; return; }
+            let total = 0;
+            tubuh.innerHTML = keranjang.map((item, index) => { const subtotal = item.harga * item.jumlah; total += subtotal; return `<tr><td>${item.nama}</td><td>${rupiah(item.harga)}</td><td><button class="qty" onclick="ubahJumlah(${index}, -1)">-</button> ${item.jumlah} <button class="qty" onclick="ubahJumlah(${index}, 1)">+</button></td><td>${rupiah(subtotal)}</td><td><button class="delete" onclick="hapusItem(${index})">Hapus</button></td></tr>`; }).join("");
+            document.getElementById("cart-total").textContent = `Total: ${rupiah(total)}`;
+        }
+
+        document.querySelectorAll("[data-filter]").forEach(tombol => tombol.addEventListener("click", () => { document.querySelector(".filter .active").classList.remove("active"); tombol.classList.add("active"); tampilkanMenu(tombol.dataset.filter); }));
+        document.getElementById("checkout-form").addEventListener("submit", event => {
+            event.preventDefault();
+            if (!keranjang.length) return alert("Keranjang pesanan masih kosong.");
+            const nama = document.getElementById("nama-pemesan").value.trim();
+            const kontak = document.getElementById("kontak-pemesan").value.trim();
+            const catatan = document.getElementById("catatan-pemesan").value.trim() || "-";
+            const daftar = keranjang.map(item => `- ${item.nama} (${item.jumlah}x) = ${rupiah(item.harga * item.jumlah)}`).join("\n");
+            const total = keranjang.reduce((jumlah, item) => jumlah + item.harga * item.jumlah, 0);
+            const pesan = `Halo Restoran Reyza, saya ingin memesan:\n\nNama: ${nama}\nKontak: ${kontak}\nCatatan: ${catatan}\n\nDaftar Menu:\n${daftar}\n\nTotal: ${rupiah(total)}`;
+            window.open(`https://wa.me/6281219082660?text=${encodeURIComponent(pesan)}`, "_blank");
+        });
+        tampilkanMenu();
+    </script>
+</body>
+</html>

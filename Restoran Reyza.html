@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restoran Reyza | Pesan Menu Favorit</title>
+    <style>
+        :root {
+            --hijau: #234e45;
+            --hijau-muda: #e4f0e9;
+            --oranye: #e6783e;
+            --cream: #fffaf2;
+            --teks: #25312d;
+            --abu: #66716d;
+            --putih: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            color: var(--teks);
+            background: var(--cream);
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        header {
+            color: var(--putih);
+            background: linear-gradient(135deg, #173c35, #3d735e);
+            padding: 22px 6% 72px;
+        }
+
+        nav, .hero, main, footer { max-width: 1120px; margin: auto; }
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .logo { font-size: 1.4rem; font-weight: bold; letter-spacing: .5px; }
+        nav ul { display: flex; flex-wrap: wrap; gap: 18px; list-style: none; margin: 0; padding: 0; }
+        nav a { color: var(--putih); text-decoration: none; font-size: .95rem; }
+        .nav-icon { display: inline-block; margin-right: 5px; font-size: 1rem; }
+        nav a:hover { color: #ffd09e; }
+        .hero { padding-top: 62px; }
+        .hero h1 { max-width: 650px; margin: 0 0 12px; font-size: clamp(2.3rem, 6vw, 4.5rem); line-height: 1.05; }
+        .hero p { max-width: 600px; margin: 0; color: #e9f5ee; font-size: 1.1rem; }
+        .hero-link, .btn {
+            display: inline-block;
+            border: 0;
+            border-radius: 6px;
+            color: var(--putih);
+            background: var(--oranye);
+            cursor: pointer;
+            font: inherit;
+            font-weight: bold;
+            padding: 11px 18px;
+            text-decoration: none;
+        }
+        .hero-link { margin-top: 25px; }
+        main { padding: 44px 6%; }
+        section { scroll-margin-top: 20px; margin-bottom: 64px; }
+        .section-heading { margin-bottom: 22px; }
+        .section-heading h2 { margin: 0; color: var(--hijau); font-size: 2rem; }
+        .section-heading p { margin: 5px 0 0; color: var(--abu); }
+        .intro-grid, .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+        .info-box { padding: 24px; border-left: 5px solid var(--oranye); background: var(--putih); box-shadow: 0 8px 24px #234e4512; }
+        .info-box h3 { margin-top: 0; color: var(--hijau); }
+        .filter { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .filter button { border: 1px solid var(--hijau); border-radius: 5px; background: transparent; color: var(--hijau); cursor: pointer; padding: 8px 14px; }
+        .filter button.active, .filter button:hover { color: var(--putih); background: var(--hijau); }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .menu-card { display: flex; flex-direction: column; overflow: hidden; background: var(--putih); box-shadow: 0 8px 24px #234e4512; }
+        .media { position: relative; height: 180px; overflow: hidden; background: #14231f; cursor: pointer; }
+        .media img, .media video { width: 100%; height: 100%; display: block; object-fit: cover; }
+        .media video { display: none; }
+        .media.playing img { display: none; }
+        .media.playing video { display: block; }
+        .media::after { position: absolute; right: 9px; bottom: 9px; padding: 3px 7px; border-radius: 4px; color: white; background: #000a; content: "Sentuh untuk video"; font-size: .75rem; pointer-events: none; }
+        .media.playing::after { content: "Video sedang diputar"; }
+        .menu-info { flex: 1; padding: 15px; }
+        .menu-info h3 { margin: 0 0 5px; color: var(--hijau); font-size: 1.1rem; }
+        .menu-info p { min-height: 48px; margin: 0 0 10px; color: var(--abu); font-size: .9rem; }
+        .price { display: block; margin-bottom: 12px; color: var(--oranye); font-weight: bold; }
+        .menu-card .btn { width: 100%; border-radius: 0; }
+        .cart-wrap { padding: 24px; background: var(--hijau-muda); }
+        .cart-table { width: 100%; border-collapse: collapse; background: var(--putih); }
+        .cart-table th, .cart-table td { padding: 10px; border-bottom: 1px solid #dbe5df; text-align: left; }
+        .cart-table th { color: var(--putih); background: var(--hijau); }
+        .promo-table-wrap { overflow-x: auto; }
+        .promo-table { width: 100%; min-width: 680px; border-collapse: collapse; background: var(--putih); }
+        .promo-table caption { padding: 0 0 10px; color: var(--abu); text-align: left; }
+        .promo-table th, .promo-table td { padding: 14px; border-bottom: 1px solid #dbe5df; text-align: left; vertical-align: top; }
+        .promo-table th { color: var(--putih); background: var(--hijau); }
+        .promo-table td a { color: var(--hijau); font-weight: bold; }
+        .qty { border: 1px solid #ccd8d2; border-radius: 4px; background: var(--putih); cursor: pointer; padding: 2px 7px; }
+        .delete { border: 0; color: #a12e35; background: transparent; cursor: pointer; }
+        .total { margin: 16px 0; color: var(--hijau); font-size: 1.2rem; font-weight: bold; text-align: right; }
+        .order-steps { margin: 0 0 22px; padding: 18px 18px 18px 38px; color: var(--hijau); background: var(--putih); }
+        .order-steps li { margin: 7px 0; padding-left: 5px; }
+        form { display: grid; gap: 10px; }
+        input, textarea { width: 100%; border: 1px solid #cbd7d1; border-radius: 4px; padding: 11px; font: inherit; }
+        textarea { min-height: 90px; resize: vertical; }
+        .contact-list { margin: 0; padding: 0; list-style: none; }
+        .contact-list li { margin: 10px 0; }
+        footer { padding: 24px 6%; color: #d9ebe1; background: var(--hijau); text-align: center; }
+        @media (max-width: 680px) {
+            nav { align-items: flex-start; flex-direction: column; }
+            nav ul { gap: 10px 14px; }
+            .intro-grid, .contact-grid { grid-template-columns: 1fr; }
+            .cart-wrap { padding: 15px 8px; overflow-x: auto; }
+            .cart-table { min-width: 620px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Restoran Reyza</div>
+            <ul>
+                <li><a href="info.html"><span class="nav-icon" aria-hidden="true">&#9432;</span>Info</a></li>
+                <li><a href="profil.html"><span class="nav-icon" aria-hidden="true">&#128100;</span>Profil</a></li>
+                <li><a href="about.html"><span class="nav-icon" aria-hidden="true">&#9733;</span>About</a></li>
+                <li><a href="gallery.html"><span class="nav-icon" aria-hidden="true">&#128247;</span>Gallery</a></li>
+                <li><a href="contact.html"><span class="nav-icon" aria-hidden="true">&#128222;</span>Contact</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>Rasa rumahan, dibuat dengan hati.</h1>
+            <p>Nikmati makanan dan minuman favorit keluarga dengan bahan segar dan cita rasa khas Reyza.</p>
+            <a class="hero-link" href="gallery.html">Lihat Menu</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="info">
+            <div class="section-heading"><h2>Info Restoran</h2><p>Temukan kami dan nikmati hidangan terbaik setiap hari.</p></div>
+            <div class="intro-grid">
+                <article class="info-box"><h3>Jam Operasional</h3><p>Senin - Minggu<br><strong>10.00 - 22.00 WIB</strong></p></article>
+                <article class="info-box"><h3>Lokasi</h3><p>Duta Bintaro Cluster Ubud 1,<br>Kota Tangerang</p></article>
+            </div>
+        </section>
+
+        <section id="profil">
+            <div class="section-heading"><h2>Profil</h2><p>Kenalan lebih dekat dengan Restoran Reyza.</p></div>
+            <div class="info-box"><p>Restoran Reyza adalah tempat makan keluarga yang menyajikan menu Indonesia favorit dengan porsi bersahabat dan pelayanan hangat. Kami menerima pesanan makan bersama, katering, dan acara keluarga.</p></div>
+        </section>
+
+        <section id="about">
+            <div class="section-heading"><h2>About</h2><p>Kenapa banyak pelanggan memilih kami?</p></div>
+            <div class="intro-grid">
+                <article class="info-box"><h3>Bahan Segar</h3><p>Setiap hidangan diracik dari bahan berkualitas yang dipilih setiap hari.</p></article>
+                <article class="info-box"><h3>Rasa Konsisten</h3><p>Resep khas Reyza menjaga rasa tetap nikmat di setiap pesanan.</p></article>
+            </div>
+            <div class="section-heading"><h2>Penawaran &amp; Paket</h2><p>Pilih kebutuhan bersantap yang sesuai, lalu tanyakan menu dan ketersediaannya kepada kami.</p></div>
+            <div class="promo-table-wrap" role="region" aria-label="Daftar promosi dan paket" tabindex="0">
+                <table class="promo-table">
+                    <caption>Promo contoh. Sesuaikan nilai dan periode dengan penawaran resmi restoran.</caption>
+                    <thead><tr><th scope="col">Pilihan</th><th scope="col">Cocok Untuk</th><th scope="col">Penawaran</th><th scope="col">Selanjutnya</th></tr></thead>
+                    <tbody>
+                        <tr><th scope="row"><details><summary>Paket Keluarga</summary><p>2 Nasi Goreng Spesial + 2 Es Teh Manis.</p><p>Diskon contoh 10%: Rp 61.200 dari harga normal Rp 68.000.</p></details></th><td>Makan bersama keluarga</td><td>Hemat Rp 6.800 untuk paket berdua.</td><td><a href="gallery.html">Lihat menu</a></td></tr>
+                        <tr><th scope="row"><details><summary>Paket Katering</summary><p>Pesan minimal 10 porsi dari menu pilihan.</p><p>Diskon contoh 15% dari total pesanan katering.</p></details></th><td>Acara keluarga, rapat, atau pertemuan</td><td>Potongan 15% untuk pemesanan minimal 10 porsi.</td><td><a href="contact.html">Hubungi kami</a></td></tr>
+                        <tr><th scope="row"><details><summary>Promo Menu Harian</summary><p>1 Soto Ayam Lamongan + 1 Es Teh Manis.</p><p>Diskon contoh 10%: Rp 27.900 dari harga normal Rp 31.000.</p></details></th><td>Pelanggan harian</td><td>Hemat Rp 3.100 untuk paket soto dan minuman.</td><td><a href="gallery.html">Lihat menu</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <div class="section-heading"><h2>Gallery Menu</h2><p>Sentuh gambar menu untuk melihat video sesuai nama hidangan.</p></div>
+            <div class="filter" aria-label="Filter menu">
+                <button class="active" data-filter="semua">Semua</button>
+                <button data-filter="makanan">Makanan</button>
+                <button data-filter="minuman">Minuman</button>
+            </div>
+            <div class="menu-grid" id="menu-list"></div>
+        </section>
+
+        <section id="pesanan">
+            <div class="section-heading"><h2>Pesanan Anda</h2><p>Atur jumlah pesanan, lalu kirim melalui WhatsApp.</p></div>
+            <div class="cart-wrap">
+                <ol class="order-steps">
+                    <li>Pilih kategori makanan atau minuman pada bagian Gallery.</li>
+                    <li>Sentuh gambar menu untuk melihat video hidangan.</li>
+                    <li>Tekan tombol "Tambah ke Pesanan" pada menu yang dipilih.</li>
+                    <li>Atur jumlah menu menggunakan tombol tambah atau kurang di keranjang.</li>
+                    <li>Isi nama dan nomor WhatsApp, lalu tambahkan catatan jika diperlukan.</li>
+                    <li>Tekan tombol "Kirim Pesanan via WhatsApp" untuk mengirim pesanan.</li>
+                </ol>
+                <table class="cart-table">
+                    <thead><tr><th>Menu</th><th>Harga</th><th>Jumlah</th><th>Subtotal</th><th>Aksi</th></tr></thead>
+                    <tbody id="cart-items"><tr><td colspan="5">Keranjang masih kosong.</td></tr></tbody>
+                </table>
+                <div class="total" id="cart-total">Total: Rp 0</div>
+                <form id="checkout-form">
+                    <input id="nama-pemesan" placeholder="Nama lengkap" required>
+                    <input id="kontak-pemesan" placeholder="Nomor telepon / WhatsApp" required>
+                    <textarea id="catatan-pemesan" placeholder="Catatan, nomor meja, atau alamat pengiriman"></textarea>
+                    <button class="btn" type="submit">Kirim Pesanan via WhatsApp</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="section-heading"><h2>Contact</h2><p>Hubungi kami untuk pertanyaan, reservasi, atau katering.</p></div>
+            <div class="contact-grid">
+                <div class="info-box"><ul class="contact-list"><li><strong>WhatsApp:</strong> 0812-1908-2660</li><li><strong>Alamat:</strong> Duta Bintaro Cluster Ubud 1, Kota Tangerang</li><li><strong>Email:</strong> halo@restoranreyza.com</li></ul></div>
+                <div class="info-box"><h3>Pesan untuk kami</h3><p>Pesanan online dapat langsung dikirim melalui tombol WhatsApp di bagian Pesanan.</p><a class="hero-link" href="#pesanan">Mulai Memesan</a></div>
+            </div>
+        </section>
+    </main>
+
+    <footer><p>Restoran Reyza &copy; 2026. Menerima pesanan untuk pesta, katering, dan makan bersama keluarga.</p></footer>
+
+    <script>
+        const menu = [
+            { nama: "Nasi Goreng Spesial", jenis: "makanan", harga: 28000, video: "video/nasi-goreng.mp4", gambar: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=600", deskripsi: "Nasi goreng dengan ayam suwir, telur, bakso, dan kerupuk." },
+            { nama: "Sate Ayam Madura", jenis: "makanan", harga: 32000, video: "video/sate-ayam.mp4", gambar: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600", deskripsi: "10 tusuk sate ayam empuk dengan bumbu kacang khas." },
+            { nama: "Soto Ayam Lamongan", jenis: "makanan", harga: 25000, video: "video/soto-ayam.mp4", gambar: "https://images.unsplash.com/photo-1541832676-9b763b0239ab?w=600", deskripsi: "Soto ayam gurih dengan koya dan telur rebus." },
+            { nama: "Es Teh Manis Segar", jenis: "minuman", harga: 6000, video: "video/es-teh-manis.mp4", gambar: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=600", deskripsi: "Teh pilihan yang menyegarkan dahaga." },
+            { nama: "Es Jeruk Peras", jenis: "minuman", harga: 8000, video: "video/es-jeruk-peras.mp4", gambar: "https://images.unsplash.com/photo-1613478223719-2ab802602423?w=600", deskripsi: "Sari jeruk segar yang kaya vitamin C." }
+        ];
+        let keranjang = [];
+        const rupiah = nilai => `Rp ${nilai.toLocaleString("id-ID")}`;
+
+        function tampilkanMenu(filter = "semua") {
+            const daftar = document.getElementById("menu-list");
+            daftar.innerHTML = menu.filter(item => filter === "semua" || item.jenis === filter).map(item => `
+                <article class="menu-card">
+                    <div class="media" onclick="putarVideo(this)" role="button" tabindex="0" aria-label="Putar video ${item.nama}">
+                        <img src="${item.gambar}" alt="${item.nama}">
+                        <video src="${item.video}" controls preload="metadata" title="Video ${item.nama}"></video>
+                    </div>
+                    <div class="menu-info"><h3>${item.nama}</h3><p>${item.deskripsi}</p><span class="price">${rupiah(item.harga)}</span></div>
+                    <button class="btn" onclick="tambahKeKeranjang('${item.nama}', ${item.harga})">Tambah ke Pesanan</button>
+                </article>`).join("");
+        }
+
+        function putarVideo(media) {
+            const video = media.querySelector("video");
+            document.querySelectorAll(".media.playing").forEach(item => { if (item !== media) { item.classList.remove("playing"); item.querySelector("video").pause(); } });
+            media.classList.add("playing");
+            video.play().catch(() => {});
+        }
+
+        function tambahKeKeranjang(nama, harga) {
+            const item = keranjang.find(data => data.nama === nama);
+            item ? item.jumlah++ : keranjang.push({ nama, harga, jumlah: 1 });
+            tampilkanKeranjang();
+            document.getElementById("pesanan").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function ubahJumlah(index, perubahan) {
+            keranjang[index].jumlah += perubahan;
+            if (keranjang[index].jumlah < 1) keranjang.splice(index, 1);
+            tampilkanKeranjang();
+        }
+
+        function hapusItem(index) { keranjang.splice(index, 1); tampilkanKeranjang(); }
+
+        function tampilkanKeranjang() {
+            const tubuh = document.getElementById("cart-items");
+            if (!keranjang.length) { tubuh.innerHTML = "<tr><td colspan=\"5\">Keranjang masih kosong.</td></tr>"; document.getElementById("cart-total").textContent = "Total: Rp 0"; return; }
+            let total = 0;
+            tubuh.innerHTML = keranjang.map((item, index) => { const subtotal = item.harga * item.jumlah; total += subtotal; return `<tr><td>${item.nama}</td><td>${rupiah(item.harga)}</td><td><button class="qty" onclick="ubahJumlah(${index}, -1)">-</button> ${item.jumlah} <button class="qty" onclick="ubahJumlah(${index}, 1)">+</button></td><td>${rupiah(subtotal)}</td><td><button class="delete" onclick="hapusItem(${index})">Hapus</button></td></tr>`; }).join("");
+            document.getElementById("cart-total").textContent = `Total: ${rupiah(total)}`;
+        }
+
+        document.querySelectorAll("[data-filter]").forEach(tombol => tombol.addEventListener("click", () => { document.querySelector(".filter .active").classList.remove("active"); tombol.classList.add("active"); tampilkanMenu(tombol.dataset.filter); }));
+        document.getElementById("checkout-form").addEventListener("submit", event => {
+            event.preventDefault();
+            if (!keranjang.length) return alert("Keranjang pesanan masih kosong.");
+            const nama = document.getElementById("nama-pemesan").value.trim();
+            const kontak = document.getElementById("kontak-pemesan").value.trim();
+            const catatan = document.getElementById("catatan-pemesan").value.trim() || "-";
+            const daftar = keranjang.map(item => `- ${item.nama} (${item.jumlah}x) = ${rupiah(item.harga * item.jumlah)}`).join("\n");
+            const total = keranjang.reduce((jumlah, item) => jumlah + item.harga * item.jumlah, 0);
+            const pesan = `Halo Restoran Reyza, saya ingin memesan:\n\nNama: ${nama}\nKontak: ${kontak}\nCatatan: ${catatan}\n\nDaftar Menu:\n${daftar}\n\nTotal: ${rupiah(total)}`;
+            window.open(`https://wa.me/6281219082660?text=${encodeURIComponent(pesan)}`, "_blank");
+        });
+        tampilkanMenu();
+    </script>
+</body>
+</html>
