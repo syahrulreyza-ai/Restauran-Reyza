@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coding Academy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">&lt;/&gt;</div>
+          <div>
+            <span class="brand-name">Coding Academy</span>
+            <small>Learn. Build. Grow.</small>
+          </div>
+        </div>
+
+        <nav class="menu" aria-label="Navigasi utama">
+          <button class="nav-btn active" data-target="galleryView" type="button">Gallery</button>
+          <button class="nav-btn" data-target="registrationView" type="button">Pendaftaran</button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section id="galleryView" class="panel active">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> Akademi digital untuk masa depan</span>
+            <h1>Ubah rasa ingin tahu jadi <span>karya digital.</span></h1>
+            <p>
+              Belajar coding dengan cara yang lebih nyata: didampingi mentor,
+              berkolaborasi dalam tim, dan membangun proyek yang bisa kamu banggakan.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn hero-cta" data-target="registrationView" type="button">
+                Mulai belajar <span aria-hidden="true">↗</span>
+              </button>
+              <span class="hero-note">Belajar dari nol, berkembang bersama.</span>
+            </div>
+            <div class="hero-proof">
+              <div class="avatar-stack" aria-hidden="true"><span>R</span><span>A</span><span>D</span><span>+</span></div>
+              <p><strong>Komunitas yang suportif</strong><br />Teman belajar selalu ada di setiap langkah.</p>
+            </div>
+          </div>
+          <div class="hero-card">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=85" alt="Peserta Coding Academy berkolaborasi dalam sesi belajar" />
+            <div class="hero-photo-tag"><span class="tag-icon">✳</span><span><strong>Belajar bareng</strong><small>Berkarya tanpa batas</small></span></div>
+            <div class="hero-stat">
+              <span class="stat-icon" aria-hidden="true">✦</span>
+              <div><strong>2.5K+</strong><small>alumni bertumbuh</small></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Cerita dari kelas</span>
+            <h2>Belajar lebih seru saat dilakukan bersama.</h2>
+          </div>
+          <p>Momen kecil, skill baru, dan banyak hal yang berhasil dibangun bersama.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <article class="gallery-item">
+            <div class="gallery-image"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Kelas coding bersama mentor" /><span class="image-index">01</span></div>
+            <div class="caption">
+              <span class="gallery-category">SESI KELAS</span>
+              <h3>Belajar dari fondasi</h3>
+              <p>
+                Peserta belajar dasar pemrograman dan membahas konsep logika serta
+                struktur data dengan pendekatan interaktif.
+              </p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-image"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Workshop coding tim" /><span class="image-index">02</span></div>
+            <div class="caption">
+              <span class="gallery-category">PROYEK TIM</span>
+              <h3>Ide jadi aplikasi nyata</h3>
+              <p>
+                Siswa bekerja dalam kelompok untuk menghadirkan proyek nyata, mulai dari
+                merancang ide sampai implementasi aplikasi.
+              </p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-image"><img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=900&q=80" alt="Pelatihan teknologi digital" /><span class="image-index">03</span></div>
+            <div class="caption">
+              <span class="gallery-category">SESI MENTOR</span>
+              <h3>Feedback yang membangun</h3>
+              <p>
+                Setiap peserta mendapatkan review dari mentor supaya performa coding dan
+                kemampuan problem solving terus berkembang.
+              </p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-image"><img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=900&q=80" alt="Belajar coding di depan laptop" /><span class="image-index">04</span></div>
+            <div class="caption">
+              <span class="gallery-category">PRAKTIK LANGSUNG</span>
+              <h3>Langsung praktik, langsung paham</h3>
+              <p>
+                Praktik langsung di laptop membantu peserta memahami konsep coding dengan
+                lebih cepat dan menyenangkan.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="registrationView" class="panel" hidden>
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">Langkah pertamamu</span>
+            <h2>Siap mulai perjalanan coding?</h2>
+          </div>
+          <p>Isi data diri dan minat belajarmu. Kami tidak sabar menyambutmu!</p>
+        </div>
+
+        <div class="form-wrapper">
+          <div class="form-intro">
+            <div class="form-icon" aria-hidden="true">&lt;/&gt;</div>
+            <div><h3>Formulir pendaftaran</h3><p>Lengkapi informasi berikut untuk bergabung.</p></div>
+            <span class="required-note"><span aria-hidden="true">*</span> Wajib diisi</span>
+          </div>
+          <form id="registrationForm">
+            <div class="form-grid">
+              <label>
+                <span>NIK</span>
+                <input type="text" id="nik" name="nik" placeholder="Masukkan NIK" required />
+              </label>
+
+              <label>
+                <span>Nama lengkap</span>
+                <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap" required />
+              </label>
+
+              <label>
+                <span>Jenis kelamin</span>
+                <select id="gender" name="gender" required>
+                  <option value="">-- Pilih jenis kelamin --</option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </label>
+
+              <label>
+                <span>No HP</span>
+                <input type="tel" id="phone" name="phone" placeholder="08xxxxxxxxxx" required />
+              </label>
+
+              <label class="full-width">
+                <span>Alamat</span>
+                <textarea id="alamat" name="alamat" rows="4" placeholder="Masukkan alamat lengkap" required></textarea>
+              </label>
+
+              <fieldset class="full-width language-fieldset">
+                <legend>Bahasa pemrograman yang diminati</legend>
+                <div class="checkbox-group">
+                  <label><input type="checkbox" name="language" value="HTML/CSS" /><span>HTML/CSS</span></label>
+                  <label><input type="checkbox" name="language" value="JavaScript" /><span>JavaScript</span></label>
+                  <label><input type="checkbox" name="language" value="Python" /><span>Python</span></label>
+                  <label><input type="checkbox" name="language" value="PHP" /><span>PHP</span></label>
+                  <label><input type="checkbox" name="language" value="Java" /><span>Java</span></label>
+                  <label><input type="checkbox" name="language" value="C#" /><span>C#</span></label>
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-btn">Kirim pendaftaran <span aria-hidden="true">↗</span></button>
+            </div>
+          </form>
+        </div>
+
+        <div id="resultCard" class="result-card" hidden>
+          <h3>Hasil Pendaftaran</h3>
+          <div id="resultContent"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">&lt;/&gt;</div>
+          <div><span class="brand-name">Coding Academy</span><small>Learn. Build. Grow.</small></div>
+        </div>
+        <p>Mulai dari penasaran. Pulang membawa karya.</p>
+        <span>© 2026 Coding Academy</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
